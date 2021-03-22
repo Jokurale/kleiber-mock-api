@@ -4,7 +4,9 @@ const cors = require("cors");
 
 const app = express();
 
-const GlueController = require("./controllers/GlueController");
+const CombinedControllers = require("./controllers/MasterController");
+
+app.use(CombinedControllers);
 
 // *** CORS
 app.options(cors());
@@ -24,10 +26,15 @@ app.use((err, req, res, next) => {
   } else next();
 });
 
-app.use(GlueController);
-
 app.get("/", (req, res) => {
   res.json({ message: "Mock API is up and running." });
+});
+
+app.use("*", (req, res) => {
+  res.json({
+    error: "Path has not been resolved.",
+    status: 404,
+  });
 });
 
 app.listen(process.env.PORT || 3000, () => {
