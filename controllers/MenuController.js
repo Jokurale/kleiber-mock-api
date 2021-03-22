@@ -8,6 +8,8 @@ const combined_menu = {
   glues: glues_menu_items,
 };
 
+const ALLOWED_SLUGS = { glues: true, applications: true };
+
 controller.get("/menu", (req, res) => {
   res.json(combined_menu);
 });
@@ -15,7 +17,7 @@ controller.get("/menu", (req, res) => {
 controller.get("/menu/:slug", (req, res) => {
   const { slug } = req.params;
 
-  res.json(combined_menu[slug]);
+  if (slug in ALLOWED_SLUGS) res.json(combined_menu[slug]);
 });
 
 module.exports = controller;
