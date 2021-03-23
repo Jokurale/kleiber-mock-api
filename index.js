@@ -4,13 +4,13 @@ const cors = require("cors");
 
 const app = express();
 
-const CombinedControllers = require("./controllers/MasterController");
-
-app.use(CombinedControllers);
-
 // *** CORS
 app.options(cors());
 app.use(cors());
+
+const CombinedControllers = require("./controllers/MasterController");
+
+app.use(CombinedControllers);
 
 // *** Body Parsing
 app.use(bodyParser.json({ type: "application/*+json" }));
